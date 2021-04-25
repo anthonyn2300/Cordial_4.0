@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "857135085032",
+    "project_id": "cordial-3",
+    "storage_bucket": "cordial-3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857135085032:android:bd17003e8d785f4a33205d",
+        "android_client_info": {
+          "package_name": "edu.fordham.cordial3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857135085032-4ig7k7kn22qd5eaflrucvv9va19e9nmk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpmwOJONXCgT6cJyjr9ijFIfV-6izdy0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857135085032-4ig7k7kn22qd5eaflrucvv9va19e9nmk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
