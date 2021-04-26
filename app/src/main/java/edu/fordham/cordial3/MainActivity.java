@@ -148,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Message message = new Message(text, user.getUid());
+        mDatabase.child("messages").push().setValue(message);
+        messageEditText.setText("");
     }
 
     public void AddCalendarEvent (View view){
