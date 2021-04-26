@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.calendarMenuItem)
         {
+                Intent i = new Intent(MainActivity.this, CalandarTab.class);
             return true;
         }
         if (item.getItemId() == R.id.searchMenuItem)
@@ -158,15 +159,4 @@ public class MainActivity extends AppCompatActivity {
         messageEditText.setText("");
     }
 
-    public void AddCalendarEvent (View view){
-            Calendar calendarEvent = Calendar.getInstance();
-            Intent i = new Intent(Intent.ACTION_EDIT);
-            i.setType("vnd.android.cursor.item/event");
-            i.putExtra("beginTime", calendarEvent.getTimeInMillis());
-            i.putExtra("allDay", true);
-            i.putExtra("rule", "FREQ=YEARLY");
-            i.putExtra("endTime", calendarEvent.getTimeInMillis() + 60 * 60 * 1000);
-            i.putExtra("title", "Calendar Event");
-            startActivity(i);
-        }
 }
