@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/signOutMenuItem"
+        android:title="Sign out" />
+    <item
+        android:id="@+id/calendarMenuItem"
+        android:title="Calendar" />
+    <item
+        android:id="@+id/searchMenuItem"
+        android:title="Search" />
+    <item
+        android:id="@+id/messagesMenuItem"
+        android:title="Messages" />
 </menu>
