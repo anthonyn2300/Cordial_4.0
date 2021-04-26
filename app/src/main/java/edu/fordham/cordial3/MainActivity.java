@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     {
         String text = messageEditText.getText().toString().trim();
 
+        //bug
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Message message = new Message(text, user.getUid());
         mDatabase.child("messages").push().setValue(message);
