@@ -126,6 +126,10 @@ public class MainActivity extends AppCompatActivity {
         {
             return true;
         }
+        if (item.getItemId() == R.id.forumMenuItem)
+        {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -144,11 +148,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void send(View view)
     {
-        String text = messageEditText.getText().toString().trim();
 
         //bug
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Message message = new Message(text, user.getUid());
+        Messages message = new
+                Messages(messageEditText.getText().toString().trim(),
+                user.getUid());
         mDatabase.child("messages").push().setValue(message);
         messageEditText.setText("");
     }

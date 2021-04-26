@@ -2,17 +2,15 @@ package edu.fordham.cordial3;
 
 import java.util.Date;
 
-public class Message {
+public class Messages{
     private String mtext;
     private String mUid;
     private long mTimestamp;
 
-    public Message()
-    {
-
+    public Messages() {
     }
 
-    public Message(String message, String uid)
+    public Messages(String message, String uid)
     {
         mtext = message;
         mUid = uid;
