@@ -3,10 +3,12 @@ package edu.fordham.cordial3;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +16,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView messageList;
     EditText messageEditText;
     private DatabaseReference mDatabase;
+    FirebaseRecyclerAdapter<Messages, MessageViewHolder> adapter;
 
 
     @Override
@@ -50,6 +56,29 @@ public class MainActivity extends AppCompatActivity {
 
         messageEditText = findViewById(R.id.messageEditText);
         messageList = findViewById(R.id.messageList);
+
+        FirebaseRecyclerOptions<Messages> options =
+                new FirebaseRecyclerOptions.Builder<Messages>()
+                .setQuery(FirebaseDatabase.getInstance()
+                .getReference()
+                .child(MESSAGES_CHILD), Messages.class)
+                .build();
+
+        adapter = new FirebaseRecyclerAdapter<Messages, MessageViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull Messages msg) {
+                holder.bindMessage(msg);
+            }
+
+            @NonNull
+            @Override
+            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
+                return new MessageViewHolder(view);
+            }
+        };
+        messageList.setLayoutManager(new LinearLayoutManager(this));
+        messageList.setAdapter(adapter);
 
         nameTextView = findViewById(R.id.nameTextView);
 
@@ -135,7 +164,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private  void signOut()
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
+
+    private void signOut()
     {
         AuthUI.getInstance()
                 .signOut(this)
@@ -155,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         Messages message = new
                 Messages(messageEditText.getText().toString().trim(),
                 user.getUid());
-        mDatabase.child("messages").push().setValue(message);
+        mDatabase.child(MESSAGES_CHILD).push().setValue(message);
         messageEditText.setText("");
     }
 
