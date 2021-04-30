@@ -1,14 +1,16 @@
 package edu.fordham.cordial3;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<Messages, MessageViewHolder> adapter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         messageEditText = findViewById(R.id.messageEditText);
         messageList = findViewById(R.id.messageList);
 
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             createSignInIntent();
         }
+
     }
 
     void createSignInIntent()
@@ -119,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 nameTextView.setText(user.getDisplayName());
+
             }
             else
             {
@@ -138,28 +143,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        if (item.getItemId() == R.id.signOutMenuItem)
+        if (item.getItemId() == R.id.signOut)
         {
             signOut();
             return true;
         }
         if (item.getItemId() == R.id.calendarMenuItem)
         {
-                Intent i = new Intent(MainActivity.this, CalandarTab.class);
+            Intent i = new Intent(MainActivity.this, CalandarTab.class);
+            startActivity(i);
             return true;
         }
         if (item.getItemId() == R.id.searchMenuItem)
         {
             return true;
         }
-        if (item.getItemId() == R.id.messagesMenuItem)
-        {
-            return true;
-        }
         if (item.getItemId() == R.id.forumMenuItem)
         {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
             return true;
         }
+        if (item.getItemId() == R.id.profileMenuItem)
+        {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+
 
         return super.onOptionsItemSelected(item);
     }

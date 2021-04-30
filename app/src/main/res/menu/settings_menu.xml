@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/signOutMenuItem"
+        android:id="@+id/signOut"
         android:title="Sign out" />
     <item
         android:id="@+id/calendarMenuItem"
@@ -12,9 +12,9 @@
         android:id="@+id/searchMenuItem"
         android:title="Search" />
     <item
-        android:id="@+id/messagesMenuItem"
-        android:title="Messages" />
-    <item
         android:id="@+id/forumMenuItem"
         android:title="Public Forum" />
+    <item
+        android:id="@+id/profileMenuItem"
+        android:title="Profile" />
 </menu>

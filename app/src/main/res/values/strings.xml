@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cordial 3</string>
+    <color name="blue">#85C1E9</color>
+    <color name="white">#ECF0F1</color>
 </resources>
