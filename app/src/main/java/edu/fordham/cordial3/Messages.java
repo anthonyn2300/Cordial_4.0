@@ -5,9 +5,10 @@ import java.util.Date;
 public class Messages{
     private String mtext;
     private String mUid;
+    private String mImageUrl;
     private long mTimestamp;
 
-    public Messages() {
+    public Messages(Object o, String uid, String s) {
     }
 
     public Messages(String message, String uid)
@@ -33,6 +34,16 @@ public class Messages{
 
     public void setUid(String m) {
         mUid = m;
+    }
+
+    public String getmImageUrl()
+    {
+        return mImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl)
+    {
+        mImageUrl = imageUrl;
     }
 
     public long getTimestamp() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,11 +27,15 @@ import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     EditText messageEditText;
     private DatabaseReference mDatabase;
     FirebaseRecyclerAdapter<Messages, MessageViewHolder> adapter;
+    FirebaseAuth firebaseAuth;
 
 
 
@@ -128,6 +134,44 @@ public class MainActivity extends AppCompatActivity {
             else
             {
                 Toast.makeText(this, "Sign in failed", Toast.LENGTH_LONG).show();
+            }
+        } //added extra for image
+        else if (requestCode == RC_IMAGE)
+        {
+            if (requestCode == RESULT_OK && data != null)
+            {
+                final Uri uri = data.getData();
+                Log.d("mobdev", "Uri" + uri.toString());
+
+                String key = mDatabase.child(MESSAGES_CHILD).push().getKey();
+
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                StorageReference storageReference =
+                        FirebaseStorage.getInstance()
+                            .getReference(user.getUid())
+                            .child(key)
+                            .child(uri.getLastPathSegment());
+
+                storageReference.putFile(uri)
+                        .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Log.i("mobdev", "Update message " + key + ": " + uri);
+                                            final FirebaseUser user = firebaseAuth.getCurrentUser();
+                                            Messages msg = new Messages(null, user.getUid(), uri.toString());
+                                            mDatabase.child(MESSAGES_CHILD)
+                                                    .child(key)
+                                                    .setValue(msg);
+                                        }
+                                    });
+
+
+                            }
+                        });
             }
         }
     }
@@ -210,6 +254,12 @@ public class MainActivity extends AppCompatActivity {
                 user.getUid());
         mDatabase.child(MESSAGES_CHILD).push().setValue(message);
         messageEditText.setText("");
+    }
+
+    public void addMessage(View view)
+    {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, RC_IMAGE);
     }
 
 }

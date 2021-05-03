@@ -31,10 +31,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profilePhoto = findViewById(R.id.profilePhoto);
-        changeProfPic = findViewById(R.id.changeProfPic);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        profilePhoto = findViewById(R.id.profilePhoto);
+        changeProfPic = findViewById(R.id.changeProfPic);
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
         changeProfPic.setOnClickListener(new View.OnClickListener(){
