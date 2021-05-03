@@ -8,10 +8,10 @@ public class Messages{
     private String mImageUrl;
     private long mTimestamp;
 
-    public Messages(Object o, String uid, String s) {
+    public Messages() {
     }
 
-    public Messages(String message, String uid)
+    public Messages(String message, String uid, String image)
     {
         mtext = message;
         mUid = uid;

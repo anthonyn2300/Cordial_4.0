@@ -16,5 +16,6 @@ public class BusinessInfoActivity extends AppCompatActivity {
 
         // TODO: do whatever you need to do with the business
         Toast.makeText(this, business.getName(), Toast.LENGTH_LONG).show();
+
     }
 }

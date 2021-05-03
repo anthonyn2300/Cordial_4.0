@@ -140,4 +140,5 @@ public class Search extends AppCompatActivity {
             return data.size();
         }
     }
+
 }

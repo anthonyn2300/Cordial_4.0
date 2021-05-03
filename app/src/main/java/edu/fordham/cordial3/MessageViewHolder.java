@@ -17,6 +17,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     public void bindMessage(Messages message)
     {
+
         if (message.getText() != null)
         {
             messageTV.setText(message.getText());
