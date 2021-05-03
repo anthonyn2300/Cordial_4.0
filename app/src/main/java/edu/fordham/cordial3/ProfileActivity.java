@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -33,6 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        profilePhoto = findViewById(R.id.profilePhoto);
+        changeProfPic = findViewById(R.id.changeProfPic);
 
         profilePhoto = findViewById(R.id.profilePhoto);
         changeProfPic = findViewById(R.id.changeProfPic);
@@ -63,7 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(Uri picUri){
-        StorageReference file = storageReference.child("profile.jpg");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        StorageReference file = storageReference.child(user.getUid() + ".jpg");
         file.putFile(picUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

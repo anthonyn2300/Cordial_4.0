@@ -200,6 +200,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.searchMenuItem)
         {
+            Intent i = new Intent(MainActivity.this, Search.class);
+            startActivity(i);
             return true;
         }
         if (item.getItemId() == R.id.forumMenuItem)
@@ -251,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Messages message = new
                 Messages(messageEditText.getText().toString().trim(),
-                user.getUid());
+                user.getUid(), user.getDisplayName());
         mDatabase.child(MESSAGES_CHILD).push().setValue(message);
         messageEditText.setText("");
     }
