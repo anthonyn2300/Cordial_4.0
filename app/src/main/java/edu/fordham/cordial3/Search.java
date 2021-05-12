@@ -118,22 +118,19 @@ public class Search extends AppCompatActivity {
             });
         }
 
-        public void updateBusiness(Business business) {
-            // TODO: update the view
-            Log.i("mobdev", "update business: " + business.getName());
-            businessNameTextView.setText(business.getName());
-            this.business = business;
-        }
-    }
 
-    public void composeMmsMessage(String message) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setData(Uri.parse("smsto:"));  // This ensures only SMS apps respond
-        intent.putExtra("sms_body", message);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
+                public void updateBusiness(Business business) {
+                    // TODO: update the view
+                    Log.i("mobdev", "update business: " + business.getName());
+                    businessNameTextView.setText(business.getName());
+                    phoneTextView.setText(business.getPhone());
+                    urlTextView.setText(business.getWebsite());
+                    locationTextView.setText(business.getAddress());
+                    this.business = business;
+                }
+
+            }
+
 
     static class SearchResultAdapter extends RecyclerView.Adapter<BusinessViewHolder> {
         List<Business> data;
@@ -142,10 +139,10 @@ public class Search extends AppCompatActivity {
             data = businesses;
         }
 
+
         @NonNull
         @Override
         public BusinessViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            // TODO: create item_business.xml for the business
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_business, parent, false);
             return new BusinessViewHolder(view);
         }

@@ -7,32 +7,28 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/urlTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="business name" />
-
-    <TextView
         android:id="@+id/businessNameTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0"
-        android:text="url"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/urlTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0" />
 
     <TextView
         android:id="@+id/locationTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="location" />
+        android:layout_weight="0" />
 
     <TextView
         android:id="@+id/phoneTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:onClick="composeMmsMessage"
-        android:text="phone" />
+        android:onClick="composeMmsMessage" />
 </LinearLayout>
