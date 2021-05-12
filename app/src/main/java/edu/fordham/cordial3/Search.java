@@ -1,6 +1,7 @@
 package edu.fordham.cordial3;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,6 +30,7 @@ public class Search extends AppCompatActivity {
 
     RecyclerView businessList;
     SearchView searchBusiness;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +58,11 @@ public class Search extends AppCompatActivity {
 
     public void doSearch(String key) {
         // for testing
-//        List<Business> searchResults = new ArrayList<>();
-//        searchResults.add(new Business("Tom's Pizza", ""));
-//        searchResults.add(new Business("Pizza Hut", ""));
-//        SearchResultAdapter adapter = new SearchResultAdapter(searchResults);
-//        businessList.setAdapter(adapter);
+        List<Business> searchResults = new ArrayList<>();
+        searchResults.add(new Business("Tom's Pizza", ""));
+        searchResults.add(new Business("Pizza Hut", ""));
+        SearchResultAdapter adapter = new SearchResultAdapter(searchResults);
+        businessList.setAdapter(adapter);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("keywords").child(key).get().
@@ -90,9 +94,17 @@ public class Search extends AppCompatActivity {
         //  for example:
         TextView businessNameTextView;
         Business business;
+        TextView phoneTextView;
+        TextView urlTextView;
+        TextView locationTextView;
+
 
         public BusinessViewHolder(@NonNull View itemView) {
             super(itemView);
+            businessNameTextView = itemView.findViewById(R.id.businessNameTextView);
+            phoneTextView = itemView.findViewById(R.id.phoneTextView);
+            urlTextView = itemView.findViewById(R.id.urlTextView);
+            locationTextView = itemView.findViewById(R.id.locationTextView);
             businessNameTextView = itemView.findViewById(R.id.businessNameTextView);
             businessNameTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,6 +123,15 @@ public class Search extends AppCompatActivity {
             Log.i("mobdev", "update business: " + business.getName());
             businessNameTextView.setText(business.getName());
             this.business = business;
+        }
+    }
+
+    public void composeMmsMessage(String message) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setData(Uri.parse("smsto:"));  // This ensures only SMS apps respond
+        intent.putExtra("sms_body", message);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
         }
     }
 

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,6 +31,8 @@ public class ProfileActivity extends AppCompatActivity {
     CircleImageView profilePhoto;
     Button changeProfPic;
     StorageReference storageReference;
+    TextView nameTextView;
+    TextView emailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,16 @@ public class ProfileActivity extends AppCompatActivity {
 
         profilePhoto = findViewById(R.id.profilePhoto);
         changeProfPic = findViewById(R.id.changeProfPic);
+        emailTextView = findViewById(R.id.emailTextView);
 
+        nameTextView = findViewById(R.id.nameTextView);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null)
+        {
+            nameTextView.setText(user.getDisplayName());
+            emailTextView.setText(user.getEmail());
+        }
 
         storageReference = FirebaseStorage.getInstance().getReference();
         changeProfPic.setOnClickListener(new View.OnClickListener(){

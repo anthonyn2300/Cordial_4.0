@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cordial3">
-        <activity android:name=".BusinessInfoActivity"></activity>
+        <activity android:name=".BusinessInfoActivity" />
         <activity android:name=".Search" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".CalandarTab" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
