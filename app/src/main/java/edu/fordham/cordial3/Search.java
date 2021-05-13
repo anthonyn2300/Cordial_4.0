@@ -58,11 +58,11 @@ public class Search extends AppCompatActivity {
 
     public void doSearch(String key) {
         // for testing
-        List<Business> searchResults = new ArrayList<>();
-        searchResults.add(new Business("Tom's Pizza", ""));
-        searchResults.add(new Business("Pizza Hut", ""));
-        SearchResultAdapter adapter = new SearchResultAdapter(searchResults);
-        businessList.setAdapter(adapter);
+        //List<Business> searchResults = new ArrayList<>();
+        //searchResults.add(new Business("Tom's Pizza", ""));
+        //searchResults.add(new Business("Pizza Hut", ""));
+        //SearchResultAdapter adapter = new SearchResultAdapter(searchResults);
+        //businessList.setAdapter(adapter);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("keywords").child(key).get().
@@ -117,8 +117,6 @@ public class Search extends AppCompatActivity {
                 }
             });
         }
-
-
                 public void updateBusiness(Business business) {
                     // TODO: update the view
                     Log.i("mobdev", "update business: " + business.getName());
@@ -128,7 +126,6 @@ public class Search extends AppCompatActivity {
                     locationTextView.setText(business.getAddress());
                     this.business = business;
                 }
-
             }
 
 
@@ -158,5 +155,4 @@ public class Search extends AppCompatActivity {
             return data.size();
         }
     }
-
 }
