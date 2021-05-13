@@ -13,6 +13,7 @@
         android:title="Search" />
     <item
         android:id="@+id/forumMenuItem"
+        android:icon="@android:drawable/sym_action_chat"
         android:title="Public Forum" />
     <item
         android:id="@+id/profileMenuItem"
